@@ -19,7 +19,7 @@ namespace NewProjectAPI.Repo
 
     public async  Task<Users> Login(string username, string password)
     {
-      var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+      var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Username == username);
       if (user == null)
         return null;
       if (!VerifyHashPassword(user.HashPassword, user.PasswordSalt, password)) 

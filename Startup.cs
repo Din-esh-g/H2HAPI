@@ -45,12 +45,13 @@ namespace NewProjectAPI
                     options.UseSqlServer(Configuration.GetConnectionString("NewProjectAPIContext")));
             services.AddCors();
       //For Clsoudinary
-      services.Configure<CloudinarySettings>(Configuration.GetSection("CloudnirySettings"));
+      services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
 
             services.AddAutoMapper(typeof(DatingRepo).Assembly);
             services.AddScoped<IAuthRepo, AuthRepo>();
            services.AddScoped<IDatingRepo, DatingRepo>();
+      services.AddScoped<LogUserActivity>();
 
       //Authenticate
 

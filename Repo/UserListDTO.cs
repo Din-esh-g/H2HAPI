@@ -13,6 +13,7 @@ namespace NewProjectAPI.Repo
     public string Gender { get; set; }
 
     public string KnownAs { get; set; }
+    public string Interest { get; set; }
     public int  Age { get; set; }
     public DateTime Created { get; set; }
     public DateTime LastActive { get; set; }

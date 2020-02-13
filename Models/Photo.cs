@@ -11,7 +11,7 @@ namespace NewProjectAPI.Models
     public bool IsMain { get; set; }
     public string PublicId { get; set; }
     public Users User { get; set; }
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
 
   }

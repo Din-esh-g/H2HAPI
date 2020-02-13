@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,10 +21,12 @@ namespace NewProjectAPI.Controllers
     {
     private readonly IAuthRepo _authRepo;
     private readonly IConfiguration _configuration;
-    public AuthController(IAuthRepo authRepo, IConfiguration configuration)
+    private readonly IMapper _mapper;
+    public AuthController(IAuthRepo authRepo, IConfiguration configuration, IMapper mapper)
     {
       _authRepo = authRepo;
       _configuration = configuration;
+      _mapper = mapper;
     }
 
    // [HttpPost("register")]
@@ -92,9 +95,15 @@ namespace NewProjectAPI.Controllers
       var tokenHandler = new JwtSecurityTokenHandler();
 
       var token = tokenHandler.CreateToken(tokenDescriptor);
+
+      //This is for the navbar photo
+      var user = _mapper.Map<UserListDTO>(userFromRepo);
+
+
       return Ok(new
       {
-        token = tokenHandler.WriteToken(token)
+        //Returning user extra for nav bar photo 
+        token = tokenHandler.WriteToken(token), user
       });
 
     }
