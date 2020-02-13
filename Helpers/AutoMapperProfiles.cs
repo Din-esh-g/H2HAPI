@@ -22,6 +22,7 @@ namespace NewProjectAPI.Helpers
       CreateMap<Photo, PhotoForReturnDto>();
       CreateMap<PhotoForCreationDto, Photo>();
       CreateMap<UserForUpdateDTO, Users>();
+      CreateMap<UserDTO, Users>();
 
     }
 

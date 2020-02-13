@@ -55,14 +55,19 @@ namespace NewProjectAPI.Controllers
       if (await _authRepo.UserExist(userDTO.Username))
         return BadRequest("User is already exist. ");
 
-      var userTocreate = new Users
-      {
-        Username = userDTO.Username,
-      };
+      //var userTocreate = new Users
+      //{
+      //  Username = userDTO.Username,
+      //};
+
+      var userTocreate = _mapper.Map<Users>(userDTO);
 
 
-      var CreatedUser = await _authRepo.Register(userTocreate, userDTO.Password);
-      return StatusCode(201);
+      var createdUser = await _authRepo.Register(userTocreate, userDTO.Password);
+      //  return StatusCode(201);
+      var userToReturn = _mapper.Map<UserForDetails>(createdUser);
+
+      return CreatedAtRoute("GetUser", new { controller = "Users", id = createdUser.Id}, userToReturn);
     }
 
     [HttpPost("login")]
