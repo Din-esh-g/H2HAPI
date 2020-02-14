@@ -26,14 +26,25 @@ namespace NewProjectAPI.Controllers
       _repo = repo;
       _mapper = mapper;
     }
+    //This method is not implemented pagination 
+    //[HttpGet]
+    //public async Task<IActionResult> GetUser()
+    //{
+    //  var users = await _repo.GetUsers();
+    //  var userToReturn = _mapper.Map<IEnumerable<UserListDTO>>(users);
+    //  return Ok(userToReturn);
+    //}
 
     [HttpGet]
-    public async Task<IActionResult> GetUser()
+    public async Task<IActionResult> GetUser([FromQuery]UserParams userParams)
     {
-      var users = await _repo.GetUsers();
+      var users = await _repo.GetUsers(userParams);
       var userToReturn = _mapper.Map<IEnumerable<UserListDTO>>(users);
+      Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPage);
       return Ok(userToReturn);
     }
+
+
     [HttpGet("{id}", Name ="GetUser")]
     public async Task<IActionResult> GetUser(int id)
     {

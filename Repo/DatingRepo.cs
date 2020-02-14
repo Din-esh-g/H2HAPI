@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NewProjectAPI.Data;
+using NewProjectAPI.Helpers;
 using NewProjectAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -42,10 +43,16 @@ namespace NewProjectAPI.Repo
       return user;
     }
 
-    public async Task<IEnumerable<Users>> GetUsers()
+    //public async Task<IEnumerable<Users>> GetUsers()
+    //{
+    //  var users = await _context.Users.Include(p => p.Photos).ToListAsync();
+    //  return users;
+    //}
+    //This method for the paginations
+    public async Task<PagedList<Users>> GetUsers(UserParams userParams)
     {
-      var users = await _context.Users.Include(p => p.Photos).ToListAsync();
-      return users;
+      var users = _context.Users.Include(p => p.Photos);
+      return await PagedList<Users>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<bool> SaveAll()
