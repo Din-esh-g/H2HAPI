@@ -1,4 +1,5 @@
 using AutoMapper;
+using NewProjectAPI.Controllers;
 using NewProjectAPI.Models;
 using NewProjectAPI.Repo;
 using System;
@@ -23,6 +24,10 @@ namespace NewProjectAPI.Helpers
       CreateMap<PhotoForCreationDto, Photo>();
       CreateMap<UserForUpdateDTO, Users>();
       CreateMap<UserDTO, Users>();
+      CreateMap<MessageForCreationDTO, Message>().ReverseMap();
+      CreateMap<Message, MessageToReturnDTO>()
+        .ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(u => u.Sender.Photos.FirstOrDefault(p => p.IsMain).URL))
+     .ForMember(m => m.RecipientPhotoUrl, opt => opt.MapFrom(u => u.Recipient.Photos.FirstOrDefault(p => p.IsMain).URL));
 
     }
 
